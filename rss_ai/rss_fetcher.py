@@ -27,7 +27,13 @@ import feedparser
 import pytz
 import yaml
 
-from rss_ai.error_handler import FeedFetchError, FilterError, ParseError, handle_error
+from rss_ai.error_handler import (
+    FeedFetchError,
+    FilterError,
+    ParseError,
+    RSSAIError,
+    handle_error,
+)
 from rss_ai.logger import setup_logger
 
 # Setup logger
@@ -118,8 +124,6 @@ def fetch_rss(url: str) -> List[Dict]:
 
     except Exception as e:
         handle_error(e, FeedFetchError, f"Error fetching RSS feed from {url}")
-        # Handle the error appropriately
-    # ... existing code ...
 
 
 def filter_recent_articles(articles: List[Dict], days: int) -> List[Dict]:
