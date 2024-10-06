@@ -11,3 +11,7 @@ I want to add pdoc to the project and add a new task to run the pdoc it should w
 ## Pytest error handling
 
 create a new unit test, test_rss_fetcher_error_handling.py to validate the new error handling, avoid using mocks
+
+## Error Handler for Web Scraper
+
+Refactor web_scraper.py to make use of the error_handler.py module.

@@ -1,7 +1,9 @@
 from unittest.mock import Mock, patch
 
 import pytest
+import requests
 
+from rss_ai.error_handler import FeedFetchError
 from rss_ai.web_scraper import scrape_url
 
 
@@ -23,14 +25,16 @@ def test_scrape_url_success(mock_requests_get):
 
 
 def test_scrape_url_network_error(mock_requests_get):
-    mock_requests_get.side_effect = Exception("Network error")
+    mock_requests_get.side_effect = requests.exceptions.RequestException(
+        "Network error"
+    )
 
-    with pytest.raises(Exception):
+    with pytest.raises(FeedFetchError, match="Error fetching URL https://example.com"):
         scrape_url("https://example.com")
 
 
 def test_scrape_url_invalid_url():
-    with pytest.raises(ValueError):
+    with pytest.raises(FeedFetchError, match="Invalid URL format: invalid_url"):
         scrape_url("invalid_url")
 
 
