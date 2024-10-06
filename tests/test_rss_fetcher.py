@@ -2,17 +2,17 @@
 Test module for rss_fetcher.py
 
 This module contains unit and integration tests for the rss_fetcher module.
-It uses pytest for testing and includes mocking of external dependencies.
+It uses pytest for testing and includes real calls to external dependencies.
 
 Test coverage aims for 100% of the rss_fetcher module.
 """
 
+import logging
+import os
 from datetime import datetime, timedelta
-from unittest.mock import mock_open, patch
 
 import pytest
 import pytz
-import yaml
 
 from rss_ai.rss_fetcher import (
     fetch_rss,
@@ -21,55 +21,43 @@ from rss_ai.rss_fetcher import (
     load_feeds,
 )
 
-# Sample data for testing
-SAMPLE_YAML = """
-OpenAI: https://openai.com/blog/rss.xml
-HuggingFace: https://huggingface.co/blog/feed.xml
-Microsoft: https://news.microsoft.com/source/topics/ai/feed/
-"""
+# Set up logging for tests
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
 
-SAMPLE_RSS_ENTRY = {
-    "title": "Test Article",
-    "link": "https://example.com/article",
-    "published_parsed": datetime.now(pytz.utc).timetuple(),
-}
+# Path to the test feeds file
+TEST_FEEDS_PATH = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), "..", "data", "test_feeds.yaml")
+)
 
-
-# Mocking functions manually
-def mock_load_feeds(file_path):
-    return {
-        "OpenAI": "https://openai.com/blog/rss.xml",
-        "HuggingFace": "https://huggingface.co/blog/feed.xml",
-        "Microsoft": "https://news.microsoft.com/source/topics/ai/feed/",
-    }
-
-
-def mock_fetch_rss(url):
-    return [SAMPLE_RSS_ENTRY]
+# Add this line for debugging
+logger.info(f"TEST_FEEDS_PATH: {TEST_FEEDS_PATH}")
 
 
 # Tests for load_feeds function
 def test_load_feeds_success():
-    result = mock_load_feeds("dummy_path.yaml")
-    assert result == {
-        "OpenAI": "https://openai.com/blog/rss.xml",
-        "HuggingFace": "https://huggingface.co/blog/feed.xml",
-        "Microsoft": "https://news.microsoft.com/source/topics/ai/feed/",
-    }
+    logger.info(f"Running test_load_feeds_success with path: {TEST_FEEDS_PATH}")
+    result = load_feeds(TEST_FEEDS_PATH)
+    logger.info(f"Load feeds result: {result}")
+    assert isinstance(result, dict), f"Expected dict, got {type(result)}"
+    assert len(result) > 0, f"Expected non-empty dict, got {result}"
+    assert all(
+        isinstance(key, str) and isinstance(value, str) for key, value in result.items()
+    ), f"Expected all string key-value pairs, got {result}"
+    assert "OpenAI" in result, f"Expected 'OpenAI' key, got keys: {result.keys()}"
+    assert (
+        "HuggingFace" in result
+    ), f"Expected 'HuggingFace' key, got keys: {result.keys()}"
 
 
 # Tests for fetch_rss function
 def test_fetch_rss_success():
-    result = mock_fetch_rss("https://example.com/rss")
-    assert result == [SAMPLE_RSS_ENTRY]
-
-
-def test_fetch_rss_failure():
-    # Simulating a failure scenario
-    try:
-        raise Exception("Parse error")
-    except Exception as e:
-        assert str(e) == "Parse error"
+    feeds = load_feeds(TEST_FEEDS_PATH)
+    for url in feeds.values():
+        result = fetch_rss(url)
+        assert isinstance(result, list)
+        assert len(result) > 0
+        assert all(isinstance(entry, dict) for entry in result)
 
 
 # Tests for filter_recent_articles function
@@ -86,23 +74,24 @@ def test_filter_recent_articles():
 
 # Integration test for get_recent_articles function
 def test_get_recent_articles():
-    mock_load_feeds_func = mock_load_feeds
-    mock_fetch_rss_func = mock_fetch_rss
-
-    feeds = mock_load_feeds_func("dummy_path.yaml")
-    result = mock_fetch_rss_func(feeds["OpenAI"])
-
-    assert len(result) == 1
-    assert result[0]["title"] == "Test Article"
+    result = get_recent_articles(TEST_FEEDS_PATH, days=7)
+    assert isinstance(result, list)
+    assert len(result) > 0
+    assert all(isinstance(article, dict) for article in result)
+    assert all("title" in article and "link" in article for article in result)
 
 
 # Error handling test for get_recent_articles
 def test_get_recent_articles_error_handling():
-    try:
-        raise Exception("Network error")
-    except Exception as excinfo:
-        assert "Network error" in str(excinfo)
+    non_existent_file = "non_existent_file.yaml"
+    logger.info(
+        f"Running test_get_recent_articles_error_handling with path: {non_existent_file}"
+    )
+    result = get_recent_articles(non_existent_file, days=7)
+    logger.info(f"Get recent articles error handling result: {result}")
+    assert isinstance(result, list), f"Expected list, got {type(result)}"
+    assert len(result) == 0, f"Expected empty list, got {result}"
 
 
 if __name__ == "__main__":
-    pytest.main()
+    pytest.main([__file__, "-v", "-s"])

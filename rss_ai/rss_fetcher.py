@@ -19,6 +19,7 @@ Dependencies:
 """
 
 import logging  # Add this import at the top of your file
+import os
 from datetime import datetime, timedelta
 from typing import Dict, List
 
@@ -47,17 +48,32 @@ def load_feeds(file_path: str) -> dict:
         yaml.YAMLError: If there's an error parsing the YAML file.
     """
     try:
+        logger.info(f"Attempting to load feeds from: {file_path}")
+        logger.info(f"Current working directory: {os.getcwd()}")
+        logger.info(f"File exists: {os.path.exists(file_path)}")
+
         with open(file_path, "r") as file:
-            data = yaml.safe_load(file)
-        feeds = data.get("feeds", {})
-        logger.info(f"Successfully loaded {len(feeds)} feeds from {file_path}")
-        return feeds
+            file_content = file.read()
+            logger.info(f"File content: {file_content}")
+            data = yaml.safe_load(file_content)
+
+        logger.info(f"YAML data loaded: {data}")
+
+        if not isinstance(data, dict):
+            logger.warning(f"Loaded data is not a dictionary. Type: {type(data)}")
+            return {}
+
+        logger.info(f"Successfully loaded {len(data)} feeds from {file_path}")
+        return data
     except FileNotFoundError:
         logger.error(f"Feed file not found: {file_path}")
-        raise FileNotFoundError(f"Feed file not found: {file_path}")
+        raise
     except yaml.YAMLError as e:
         logger.error(f"Error parsing YAML file: {e}")
-        raise yaml.YAMLError(f"Error parsing YAML file: {e}")
+        raise
+    except Exception as e:
+        logger.error(f"Unexpected error loading feeds: {e}")
+        raise
 
 
 def fetch_rss(url: str) -> List[Dict]:
@@ -132,11 +148,13 @@ def get_recent_articles(file_path: str, days: int) -> List[Dict]:
 
     Returns:
         List[Dict]: A list of recent articles from all feeds.
-
-    Raises:
-        Exception: If there's an error processing any of the feeds.
     """
-    feeds = load_feeds(file_path)
+    try:
+        feeds = load_feeds(file_path)
+    except FileNotFoundError:
+        logger.error(f"Feed file not found: {file_path}")
+        return []
+
     all_articles = []
 
     for name, url in feeds.items():
