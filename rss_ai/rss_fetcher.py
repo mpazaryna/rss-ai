@@ -18,7 +18,6 @@ Dependencies:
     - datetime
 """
 
-import logging  # Add this import at the top of your file
 import os
 from datetime import datetime, timedelta
 from typing import Dict, List
