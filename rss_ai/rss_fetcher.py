@@ -27,6 +27,7 @@ import feedparser
 import pytz
 import yaml
 
+from rss_ai.error_handler import FeedFetchError, FilterError, ParseError, handle_error
 from rss_ai.logger import setup_logger
 
 # Setup logger
@@ -65,15 +66,12 @@ def load_feeds(file_path: str) -> dict:
 
         logger.info(f"Successfully loaded {len(data)} feeds from {file_path}")
         return data
-    except FileNotFoundError:
-        logger.error(f"Feed file not found: {file_path}")
-        raise
+    except FileNotFoundError as e:
+        handle_error(e, ParseError, f"Feed file not found: {file_path}")
     except yaml.YAMLError as e:
-        logger.error(f"Error parsing YAML file: {e}")
-        raise
+        handle_error(e, ParseError, "Error parsing YAML file")
     except Exception as e:
-        logger.error(f"Unexpected error loading feeds: {e}")
-        raise
+        handle_error(e, RSSAIError, "Unexpected error loading feeds")
 
 
 def fetch_rss(url: str) -> List[Dict]:
@@ -98,18 +96,28 @@ def fetch_rss(url: str) -> List[Dict]:
         # Extract articles from the feed
         articles = []
         for entry in feed_data.entries:
+            # Log entry details
+            logger.info(f"Entry Title: {entry.title}")
+            logger.info(f"Entry Link: {entry.link}")
+            logger.info(f"Entry Published Date: {entry.published}")
+
+            # Safely access the summary attribute
+            summary = getattr(entry, "summary", "No summary available")
+
+            logger.info(f"Entry Summary: {summary}")
+
             articles.append(
                 {
                     "title": entry.title,
                     "link": entry.link,
                     "published_parsed": entry.published_parsed,
-                    # Add any other fields you need from the entry
+                    "summary": summary,  # Include summary safely
                 }
             )
         return articles
 
     except Exception as e:
-        logging.error(f"Error fetching RSS feed from {url}: {e}")
+        handle_error(e, FeedFetchError, f"Error fetching RSS feed from {url}")
         # Handle the error appropriately
     # ... existing code ...
 
@@ -124,18 +132,33 @@ def filter_recent_articles(articles: List[Dict], days: int) -> List[Dict]:
 
     Returns:
         List[Dict]: Filtered list of recent articles.
+
+    Raises:
+        FilterError: If there's an error filtering the articles.
     """
-    cutoff_date = datetime.now(pytz.utc) - timedelta(days=days)
-    recent_articles = [
-        article
-        for article in articles
-        if "published_parsed" in article
-        and datetime(*article["published_parsed"][:6], tzinfo=pytz.utc) > cutoff_date
-    ]
-    logger.info(
-        f"Filtered {len(recent_articles)} recent articles out of {len(articles)} total articles"
-    )
-    return recent_articles
+    try:
+        cutoff_date = datetime.now(pytz.utc) - timedelta(days=days)
+        recent_articles = []
+        for article in articles:
+            if "published_parsed" in article:
+                try:
+                    published_date = datetime(
+                        *article["published_parsed"][:6], tzinfo=pytz.utc
+                    )
+                    if published_date > cutoff_date:
+                        recent_articles.append(article)
+                except (TypeError, ValueError):
+                    logger.warning(
+                        f"Invalid date format for article: {article.get('title', 'Unknown')}"
+                    )
+                    continue
+
+        logger.info(
+            f"Filtered {len(recent_articles)} recent articles out of {len(articles)} total articles"
+        )
+        return recent_articles
+    except Exception as e:
+        handle_error(e, FilterError, "Error filtering recent articles")
 
 
 def get_recent_articles(file_path: str, days: int) -> List[Dict]:
@@ -151,8 +174,8 @@ def get_recent_articles(file_path: str, days: int) -> List[Dict]:
     """
     try:
         feeds = load_feeds(file_path)
-    except FileNotFoundError:
-        logger.error(f"Feed file not found: {file_path}")
+    except ParseError:
+        logger.error(f"Failed to load feeds from {file_path}")
         return []
 
     all_articles = []
