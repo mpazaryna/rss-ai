@@ -1,6 +1,6 @@
 # RSS-AI
 
-(Your existing content...)
+Inspired by this [article](https://medium.com/@paulo_marcos/save-precious-time-by-letting-ai-read-the-news-for-you-5c0c851e599a).
 
 ## Development
 

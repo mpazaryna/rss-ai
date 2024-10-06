@@ -1,7 +1,5 @@
 """Task definitions for project management using Invoke."""
 
-import os
-
 from invoke import task
 
 

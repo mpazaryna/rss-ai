@@ -14,4 +14,8 @@ poetry.lock
 
 # Other common files to ignore
 .DS_Store
-*.log
+
+# Ignore all files in the log folder
+/logs/*
+# Except for README.md
+!/logs/README.md
