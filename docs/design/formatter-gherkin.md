@@ -1,4 +1,4 @@
-# Output Formatter Gherkin Scenarios
+# Formatter Gherkin Scenarios
 
 ## Feature: Format Article Summary
 

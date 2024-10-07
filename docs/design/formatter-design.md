@@ -1,8 +1,8 @@
-# Output Formatter Design Document
+# Formatter Design Document
 
 ## 1. Overview
 
-The Output Formatter is a crucial component of our AI-powered RSS news summarizer application. Its primary purpose is to take the summarized article data and format it into a clean, readable, and consistent presentation format.
+The Formatter is a crucial component of our AI-powered RSS news summarizer application. Its primary purpose is to take the summarized article data and format it into a clean, readable, and consistent presentation format.
 
 ## 2. Key Components
 
