@@ -6,11 +6,11 @@ from rss_ai.error_handler import (  # Import the error handling functions and ex
     ParseError,
     handle_error,
 )
+from rss_ai.fetcher import get_recent_articles
 from rss_ai.formatter import format_summary
 from rss_ai.logger import setup_logger
-from rss_ai.rss_fetcher import get_recent_articles
+from rss_ai.scraper import scrape_url  # Import the scrape_url function
 from rss_ai.summarizer import generate_cache_filename  # Import the function
-from rss_ai.web_scraper import scrape_url  # Import the scrape_url function
 
 # Setup logger
 logger = setup_logger("workflow", "workflow.log")
