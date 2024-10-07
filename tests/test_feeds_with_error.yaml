@@ -1,0 +1,4 @@
+
+        Valid Feed: https://rss.nytimes.com/services/xml/rss/nyt/Technology.xml
+        Invalid Feed: http://invalid.url.that.does.not.exist
+        

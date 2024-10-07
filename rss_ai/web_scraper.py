@@ -41,7 +41,11 @@ def scrape_url(url: str, user_agent: Optional[str] = None) -> str:
             ValueError("Invalid URL"), FeedFetchError, f"Invalid URL format: {url}"
         )
 
-    headers = {"User-Agent": user_agent or DEFAULT_USER_AGENT}
+    headers = {
+        "User-Agent": user_agent or DEFAULT_USER_AGENT,
+        "Accept-Language": "en-US,en;q=0.9",
+        "Referer": "https://openai.com/",
+    }
 
     try:
         # Implement basic rate limiting

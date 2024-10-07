@@ -1,10 +1,16 @@
 import os
 from typing import Dict, List
 
+from rss_ai.error_handler import (  # Import the error handling functions and exceptions
+    FeedFetchError,
+    ParseError,
+    handle_error,
+)
 from rss_ai.formatter import format_summary
 from rss_ai.logger import setup_logger
 from rss_ai.rss_fetcher import get_recent_articles
 from rss_ai.summarizer import generate_cache_filename  # Import the function
+from rss_ai.web_scraper import scrape_url  # Import the scrape_url function
 
 # Setup logger
 logger = setup_logger("workflow", "workflow.log")
@@ -25,7 +31,13 @@ def process_feeds(feed_file: str, output_dir: str, days: int = 1):
     os.makedirs(output_dir, exist_ok=True)
 
     # Get recent articles
-    articles = get_recent_articles(feed_file, days)
+    try:
+        articles = get_recent_articles(feed_file, days)  # Attempt to fetch articles
+    except Exception as e:
+        handle_error(
+            e, FeedFetchError, "Failed to fetch recent articles"
+        )  # Handle fetch errors
+
     logger.info(f"Retrieved {len(articles)} recent articles")
 
     # Process each article
@@ -42,8 +54,19 @@ def process_feeds(feed_file: str, output_dir: str, days: int = 1):
             # For this example, we'll use the article's summary as our "AI-generated" summary
             summary = article.get("summary", "No summary available")
 
-            # Format the summary
+            # Scrape the full content of the article
+            try:
+                full_content = scrape_url(article_data["url"])  # Get full content
+            except Exception as e:
+                handle_error(
+                    e, ParseError, f"Failed to scrape URL: {article_data['url']}"
+                )  # Handle scraping errors
+
+            # Format the summary and include full content
             formatted_content = format_summary(article_data, summary)
+            formatted_content += (
+                f"\n\n## Full Content\n\n{full_content}"  # Add full content section
+            )
 
             # Generate a filename using the generate_cache_filename function
             filename = generate_cache_filename(article_data["url"]) + ".md"
@@ -56,9 +79,10 @@ def process_feeds(feed_file: str, output_dir: str, days: int = 1):
             logger.info(f"Wrote article summary to {file_path}")
 
         except Exception as e:
-            logger.error(
-                f"Error processing article {article.get('title', 'Unknown')}: {str(e)}"
-            )
-            continue
+            handle_error(
+                e,
+                ParseError,
+                f"Error processing article: {article.get('title', 'Unknown')}",
+            )  # Handle article processing errors
 
     logger.info("Finished processing feeds")
