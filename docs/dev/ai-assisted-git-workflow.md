@@ -41,3 +41,7 @@ This workflow enhances transparency, maintains code quality, and facilitates eas
 git log --oneline
 git revert def5678
 ```
+
+## Remove test
+
+This should be rolled back.
