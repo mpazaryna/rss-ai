@@ -67,12 +67,13 @@ def load_feeds(file_path: str) -> dict:
 
         logger.info(f"YAML data loaded: {data}")
 
-        if not isinstance(data, dict):
-            logger.warning(f"Loaded data is not a dictionary. Type: {type(data)}")
+        if not isinstance(data, dict) or "feeds" not in data:
+            logger.warning(f"Loaded data is not in the expected format. Data: {data}")
             return {}
 
-        logger.info(f"Successfully loaded {len(data)} feeds from {file_path}")
-        return data
+        feeds = data["feeds"]
+        logger.info(f"Successfully loaded {len(feeds)} feeds from {file_path}")
+        return feeds
     except FileNotFoundError as e:
         handle_error(e, ParseError, f"Feed file not found: {file_path}")
     except yaml.YAMLError as e:
