@@ -19,11 +19,13 @@ Dependencies:
 """
 
 import os
+import xml.etree.ElementTree as ET
 from datetime import datetime, timedelta
 from typing import Dict, List
 
 import feedparser
 import pytz
+import requests
 import yaml
 
 from rss_ai.error_handler import (
@@ -95,7 +97,20 @@ def fetch_rss(url: str) -> List[Dict]:
     try:
         # Use feedparser to fetch and parse the RSS feed directly
         feed_data = feedparser.parse(url)
+
         if feed_data.bozo:
+            logger.error(f"Feedparser encountered an error: {feed_data.bozo_exception}")
+
+            # Attempt to parse the raw XML to get more information
+            try:
+                response = requests.get(url, timeout=10)
+                response.raise_for_status()
+                ET.fromstring(response.content)
+            except ET.ParseError as xml_error:
+                logger.error(f"XML parsing error: {xml_error}")
+            except requests.RequestException as req_error:
+                logger.error(f"Request error: {req_error}")
+
             raise ValueError(f"Error parsing feed: {feed_data.bozo_exception}")
 
         # Extract articles from the feed
@@ -122,6 +137,7 @@ def fetch_rss(url: str) -> List[Dict]:
         return articles
 
     except Exception as e:
+        logger.exception(f"Error fetching RSS feed from {url}")
         handle_error(e, FeedFetchError, f"Error fetching RSS feed from {url}")
 
 
