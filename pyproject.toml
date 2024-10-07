@@ -12,6 +12,7 @@ beautifulsoup4 = "^4.12.3"
 pytz = "^2024.2"
 feedparser = "^6.0.11"
 pyyaml = "^6.0.2"
+openai = "^1.51.0"
 
 [tool.poetry.group.dev.dependencies]
 invoke = "^2.2.0"
@@ -20,6 +21,7 @@ pytest-cov = "^4.1.0"
 black = "^23.3.0"
 flake8 = "^6.1.0"
 mdformat = "^0.7.16"  # Replace markdownlint-cli2 with mdformat
+ipykernel = "^6.29.5"
 
 [build-system]
 requires = ["poetry-core"]

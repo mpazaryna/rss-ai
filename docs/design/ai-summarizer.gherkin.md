@@ -1,4 +1,4 @@
-# AI Summarizer Gherkin Scenarios
+# AI Summarizer Gherkin Scenario
 
 ## Feature: Article Summarization
 
