@@ -34,3 +34,7 @@ The project documentation is generated using pdoc and can be found in the `docs/
 ## Test Coverage
 
 Test coverage reports are generated in the `docs/coverage/` directory after running `invoke test-coverage`. This directory is not included in the repository.
+
+## Actual Article
+
+https://huggingface.co/blog/leaderboard-finbench

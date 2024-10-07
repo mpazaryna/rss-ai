@@ -4,12 +4,12 @@ import pytest
 import requests
 
 from rss_ai.error_handler import FeedFetchError
-from rss_ai.web_scraper import scrape_url
+from rss_ai.scraper import scrape_url
 
 
 @pytest.fixture
 def mock_requests_get():
-    with patch("rss_ai.web_scraper.requests.get") as mock_get:
+    with patch("rss_ai.scraper.requests.get") as mock_get:
         yield mock_get
 
 

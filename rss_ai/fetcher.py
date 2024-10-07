@@ -71,8 +71,11 @@ def load_feeds(file_path: str) -> dict:
             logger.warning(f"Loaded data is not a dictionary. Type: {type(data)}")
             return {}
 
-        logger.info(f"Successfully loaded {len(data)} feeds from {file_path}")
-        return data
+        # If there's a 'feeds' key, use that; otherwise, use the whole dict
+        feeds = data.get("feeds", data)
+
+        logger.info(f"Successfully loaded {len(feeds)} feeds from {file_path}")
+        return feeds
     except FileNotFoundError as e:
         handle_error(e, ParseError, f"Feed file not found: {file_path}")
     except yaml.YAMLError as e:
@@ -209,8 +212,7 @@ def get_recent_articles(file_path: str, days: int) -> List[Dict]:
             all_articles.extend(recent_articles)
         except Exception as e:
             logger.error(f"Error processing feed '{name}': {str(e)}")
-            # Instead of raising an exception, we'll continue processing other feeds
-            continue
+            # Continue processing other feeds
 
     logger.info(
         f"Retrieved a total of {len(all_articles)} recent articles from all feeds"
