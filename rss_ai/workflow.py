@@ -10,7 +10,10 @@ from rss_ai.fetcher import get_recent_articles
 from rss_ai.formatter import format_summary
 from rss_ai.logger import setup_logger
 from rss_ai.scraper import scrape_url  # Import the scrape_url function
-from rss_ai.summarizer import generate_cache_filename  # Import the function
+from rss_ai.summarizer import (  # Import the function
+    generate_cache_filename,
+    generate_summary,
+)
 
 # Setup logger
 logger = setup_logger("workflow", "workflow.log")
@@ -65,7 +68,7 @@ def process_article(article: Dict, output_dir: str):
         }
 
         # For this example, we'll use the article's summary as our "AI-generated" summary
-        summary = article.get("summary", "No summary available")
+        # summary = article.get("summary", "No summary available")
 
         # Scrape the full content of the article
         try:
@@ -75,11 +78,10 @@ def process_article(article: Dict, output_dir: str):
                 e, ParseError, f"Failed to scrape URL: {article_data['url']}"
             )  # Handle scraping errors
 
+        summary = generate_summary(full_content)
+
         # Format the summary and include full content
         formatted_content = format_summary(article_data, summary)
-        formatted_content += (
-            f"\n\n## Full Content\n\n{full_content}"  # Add full content section
-        )
 
         # Generate a filename using the generate_cache_filename function
         filename = generate_cache_filename(article_data["url"]) + ".md"
