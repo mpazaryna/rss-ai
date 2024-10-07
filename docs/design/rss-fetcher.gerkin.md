@@ -68,3 +68,4 @@ Scenario: Handle errors in individual feeds
   Then the function should return articles from valid feeds
   And skip feeds that raise exceptions
   And the log should contain error messages for failed feeds
+  

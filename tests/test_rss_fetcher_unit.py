@@ -1,10 +1,10 @@
 """
-Test module for rss_fetcher.py
+Unit test module for rss_fetcher.py
 
-This module contains unit and integration tests for the rss_fetcher module.
-It uses pytest for testing and includes real calls to external dependencies.
+This module contains unit tests for the rss_fetcher module.
+It uses pytest for testing and does not include calls to external dependencies.
 
-Test coverage aims for 100% of the rss_fetcher module.
+Test coverage aims for unit tests of the rss_fetcher module.
 """
 
 import logging
@@ -14,12 +14,7 @@ from datetime import datetime, timedelta
 import pytest
 import pytz
 
-from rss_ai.rss_fetcher import (
-    fetch_rss,
-    filter_recent_articles,
-    get_recent_articles,
-    load_feeds,
-)
+from rss_ai.rss_fetcher import filter_recent_articles, load_feeds
 
 # Set up logging for tests
 logging.basicConfig(level=logging.DEBUG)
@@ -50,16 +45,6 @@ def test_load_feeds_success():
     ), f"Expected 'HuggingFace' key, got keys: {result.keys()}"
 
 
-# Tests for fetch_rss function
-def test_fetch_rss_success():
-    feeds = load_feeds(TEST_FEEDS_PATH)
-    for url in feeds.values():
-        result = fetch_rss(url)
-        assert isinstance(result, list)
-        assert len(result) > 0
-        assert all(isinstance(entry, dict) for entry in result)
-
-
 # Tests for filter_recent_articles function
 def test_filter_recent_articles():
     now = datetime.now(pytz.utc)
@@ -70,27 +55,6 @@ def test_filter_recent_articles():
     ]
     result = filter_recent_articles(articles, 3)
     assert len(result) == 2
-
-
-# Integration test for get_recent_articles function
-def test_get_recent_articles():
-    result = get_recent_articles(TEST_FEEDS_PATH, days=7)
-    assert isinstance(result, list)
-    assert len(result) > 0
-    assert all(isinstance(article, dict) for article in result)
-    assert all("title" in article and "link" in article for article in result)
-
-
-# Error handling test for get_recent_articles
-def test_get_recent_articles_error_handling():
-    non_existent_file = "non_existent_file.yaml"
-    logger.info(
-        f"Running test_get_recent_articles_error_handling with path: {non_existent_file}"
-    )
-    result = get_recent_articles(non_existent_file, days=7)
-    logger.info(f"Get recent articles error handling result: {result}")
-    assert isinstance(result, list), f"Expected list, got {type(result)}"
-    assert len(result) == 0, f"Expected empty list, got {result}"
 
 
 if __name__ == "__main__":
