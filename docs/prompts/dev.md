@@ -15,3 +15,7 @@ create a new unit test, test_rss_fetcher_error_handling.py to validate the new e
 ## Error Handler for Web Scraper
 
 Refactor web_scraper.py to make use of the error_handler.py module.
+
+## Error Handler for Summarizer
+
+can you add some unit tests to test_summarizer_unit.py to validate the error handling.  do not use oop or mocks
