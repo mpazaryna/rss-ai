@@ -27,7 +27,7 @@ Published
 October 5, 2024
 Update on GitHub
 Upvote
-5
+6
 yuchenglow
 yuchenglow
 seanses
@@ -139,7 +139,7 @@ estimator
 and tell us about
 your findings!
 Upvote
-5
+6
 Company
 © Hugging Face
 TOS
