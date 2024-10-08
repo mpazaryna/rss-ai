@@ -1,10 +1,10 @@
-# NotebookLM now lets you listen to a conversation about your sources
+# How to use Google Lens to ask questions out loud about what you see
 
 **Source**: Google
-**Date**: time.struct_time(tm_year=2024, tm_mon=9, tm_mday=11, tm_hour=16, tm_min=0, tm_sec=0, tm_wday=2, tm_yday=255, tm_isdst=0)
+**Date**: time.struct_time(tm_year=2024, tm_mon=10, tm_mday=3, tm_hour=16, tm_min=0, tm_sec=0, tm_wday=3, tm_yday=277, tm_isdst=0)
 
-- NotebookLM now offers "Audio Overview," a feature that turns your documents into engaging audio discussions.
-- Two AI hosts summarize your material, make connections, and banter, creating a lively "deep dive" conversation.
-- Audio Overview can be downloaded and taken on the go, making it a convenient way to learn and remember information.
+- Google Lens now supports voice input, allowing users to ask questions about things they see using their voice.
+- Voice input in Lens enables a more natural and intuitive way to explore the world around you by eliminating the need to type in questions manually.
+- The feature is available globally for English queries in the Google app for both Android and iOS devices.
 
-[Read more](https://blog.google/technology/ai/notebooklm-audio-overviews/)
+[Read more](https://blog.google/products/search/google-lens-voice-search/)
