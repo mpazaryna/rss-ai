@@ -76,13 +76,3 @@ def scrape_url(url: str, user_agent: Optional[str] = None) -> str:
         return text
     except Exception as e:
         handle_error(e, RSSAIError, f"Error processing content from {url}")
-
-
-if __name__ == "__main__":
-    # Example usage
-    test_url = "https://example.com"
-    try:
-        content = scrape_url(test_url)
-        print(content[:500])  # Print first 500 characters
-    except RSSAIError as e:
-        print(f"An error occurred: {str(e)}")

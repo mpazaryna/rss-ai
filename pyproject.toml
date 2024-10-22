@@ -20,7 +20,7 @@ pytest = "^7.4.0"
 pytest-cov = "^4.1.0"
 black = "^23.3.0"
 flake8 = "^6.1.0"
-mdformat = "^0.7.16"  # Replace markdownlint-cli2 with mdformat
+mdformat = "^0.7.16"  
 ipykernel = "^6.29.5"
 
 [build-system]

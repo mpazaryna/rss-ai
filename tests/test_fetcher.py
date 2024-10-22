@@ -106,7 +106,3 @@ def test_get_recent_articles_error_handling():
     logger.info(f"Get recent articles error handling result: {result}")
     assert isinstance(result, list), f"Expected list, got {type(result)}"
     assert len(result) == 0, f"Expected empty list, got {result}"
-
-
-if __name__ == "__main__":
-    pytest.main([__file__, "-v", "-s"])

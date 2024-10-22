@@ -86,12 +86,9 @@ def process_article(article: Dict, output_dir: str):
         article_data = {
             "title": article.get("title", "No title available"),
             "source": article.get("feed_name", "Unknown source"),
-            "date": article.get("published_parsed", "No date available"),
+            "date": article.get("published_parse", "No date available"),
             "url": article.get("link", "#"),
         }
-
-        # For this example, we'll use the article's summary as our "AI-generated" summary
-        # summary = article.get("summary", "No summary available")
 
         # Scrape the full content of the article
         try:

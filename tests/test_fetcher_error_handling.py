@@ -130,7 +130,3 @@ def test_filter_recent_articles_mixed_validity():
     assert (
         result[0]["title"] == "Recent Article"
     ), "Expected the recent article to be returned"
-
-
-if __name__ == "__main__":
-    pytest.main([__file__, "-v", "-s"])
