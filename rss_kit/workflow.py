@@ -1,16 +1,16 @@
 import os
 from typing import Dict, List
 
-from rss_ai.error_handler import (  # Import the error handling functions and exceptions
+from rss_kit.error_handler import (  # Import the error handling functions and exceptions
     FeedFetchError,
     ParseError,
     handle_error,
 )
-from rss_ai.fetcher import get_recent_articles
-from rss_ai.formatter import format_summary
-from rss_ai.logger import setup_logger
-from rss_ai.scraper import scrape_url  # Import the scrape_url function
-from rss_ai.summarizer import (  # Import the function
+from rss_kit.fetcher import get_recent_articles
+from rss_kit.formatter import format_summary
+from rss_kit.logger import setup_logger
+from rss_kit.scraper import scrape_url  # Import the scrape_url function
+from rss_kit.summarizer import (  # Import the function
     generate_cache_filename,
     generate_summary,
 )

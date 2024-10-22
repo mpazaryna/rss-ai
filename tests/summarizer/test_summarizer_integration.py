@@ -1,7 +1,7 @@
 import os
 import unittest
 
-from rss_ai.summarizer import generate_summary, summarize_article
+from rss_kit.summarizer import generate_summary, summarize_article
 
 
 def test_summarize_article():

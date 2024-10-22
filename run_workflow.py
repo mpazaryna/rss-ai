@@ -1,7 +1,7 @@
 import os
 
-from rss_ai.logger import setup_logger
-from rss_ai.workflow import process_feeds
+from rss_kit.logger import setup_logger
+from rss_kit.workflow import process_feeds
 
 # Setup logger
 logger = setup_logger("run_workflow", "run_workflow.log")

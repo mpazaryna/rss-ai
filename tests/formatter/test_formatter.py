@@ -2,7 +2,7 @@ import os
 
 import pytest
 
-from rss_ai.formatter import format_summary
+from rss_kit.formatter import format_summary
 
 
 def test_format_summary():

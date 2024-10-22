@@ -2,7 +2,7 @@ import time
 
 import pytest
 
-from rss_ai.scraper import scrape_url
+from rss_kit.scraper import scrape_url
 
 
 def test_scrape_real_website():

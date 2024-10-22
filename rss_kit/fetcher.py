@@ -28,14 +28,14 @@ import pytz
 import requests
 import yaml
 
-from rss_ai.error_handler import (
+from rss_kit.error_handler import (
     FeedFetchError,
     FilterError,
     ParseError,
     RSSAIError,
     handle_error,
 )
-from rss_ai.logger import setup_logger
+from rss_kit.logger import setup_logger
 
 # Setup logger
 logger = setup_logger("rss_fetcher", "rss_fetcher.log")

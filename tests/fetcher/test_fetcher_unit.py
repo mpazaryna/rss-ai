@@ -14,7 +14,7 @@ from datetime import datetime, timedelta
 import pytest
 import pytz
 
-from rss_ai.fetcher import filter_recent_articles, load_feeds
+from rss_kit.fetcher import filter_recent_articles, load_feeds
 
 # Set up logging for tests
 logging.basicConfig(level=logging.DEBUG)

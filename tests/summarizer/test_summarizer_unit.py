@@ -2,8 +2,8 @@ import os
 import shutil
 import tempfile
 
-from rss_ai.error_handler import RSSAIError
-from rss_ai.summarizer import (
+from rss_kit.error_handler import RSSAIError
+from rss_kit.summarizer import (
     CACHE_DIR,
     cache_summary,
     generate_cache_filename,

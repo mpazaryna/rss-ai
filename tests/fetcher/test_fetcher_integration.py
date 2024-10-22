@@ -12,8 +12,8 @@ import os
 
 import pytest
 
-from rss_ai.error_handler import FeedFetchError
-from rss_ai.fetcher import fetch_rss, get_recent_articles
+from rss_kit.error_handler import FeedFetchError
+from rss_kit.fetcher import fetch_rss, get_recent_articles
 
 # Set up logging for tests
 logging.basicConfig(level=logging.DEBUG)

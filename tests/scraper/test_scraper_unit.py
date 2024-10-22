@@ -3,13 +3,13 @@ from unittest.mock import Mock, patch
 import pytest
 import requests
 
-from rss_ai.error_handler import FeedFetchError
-from rss_ai.scraper import scrape_url
+from rss_kit.error_handler import FeedFetchError
+from rss_kit.scraper import scrape_url
 
 
 @pytest.fixture
 def mock_requests_get():
-    with patch("rss_ai.scraper.requests.get") as mock_get:
+    with patch("rss_kit.scraper.requests.get") as mock_get:
         yield mock_get
 
 

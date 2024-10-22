@@ -4,8 +4,8 @@ from urllib.parse import urlparse
 
 from openai import OpenAI
 
-from rss_ai.error_handler import RSSAIError, handle_error
-from rss_ai.logger import setup_logger
+from rss_kit.error_handler import RSSAIError, handle_error
+from rss_kit.logger import setup_logger
 
 logger = setup_logger("summarizer", "summarizer.log")
 

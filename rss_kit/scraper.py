@@ -6,7 +6,7 @@ from urllib.parse import urlparse
 import requests
 from bs4 import BeautifulSoup
 
-from rss_ai.error_handler import FeedFetchError, RSSAIError, handle_error
+from rss_kit.error_handler import FeedFetchError, RSSAIError, handle_error
 
 # Configure logging
 logging.basicConfig(

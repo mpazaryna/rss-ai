@@ -14,8 +14,8 @@ from datetime import datetime, timedelta
 import pytest
 import pytz
 
-from rss_ai.error_handler import FeedFetchError, ParseError
-from rss_ai.fetcher import (
+from rss_kit.error_handler import FeedFetchError, ParseError
+from rss_kit.fetcher import (
     fetch_rss,
     filter_recent_articles,
     get_recent_articles,

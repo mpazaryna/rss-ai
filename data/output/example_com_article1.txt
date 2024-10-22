@@ -1,3 +1,3 @@
-- OpenAI has developed a new series of AI reasoning models that excel in solving complex tasks in science, coding, and math, outperforming previous models.
-- These models have undergone safety training to adhere to safety and alignment guidelines by harnessing their reasoning capabilities effectively.
-- The enhanced reasoning capabilities of these models can be particularly useful for individuals working on complex problems in science, coding, math, and other similar fields.
+- OpenAI has developed a new series of AI reasoning models that spend more time thinking before responding, excelling in solving complex problems in science, coding, math, and more.
+- These models, named OpenAI o1, have enhanced reasoning capabilities and safety training to adhere to guidelines effectively, making them suitable for users tackling complex tasks.
+- Besides the o1 model, OpenAI has also released a faster and cheaper model called OpenAI o1-mini, optimized for coding tasks and offering a cost-effective solution for specific applications.
