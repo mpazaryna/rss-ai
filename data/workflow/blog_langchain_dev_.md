@@ -1,10 +1,10 @@
-# Build stateful conversational AI agents with LangGraph and assistant-ui
+# OpenRecovery: Transforming addiction recovery with LangGraph Cloud
 
 **Source**: Langchain
-**Date**: time.struct_time(tm_year=2024, tm_mon=9, tm_mday=11, tm_hour=15, tm_min=44, tm_sec=40, tm_wday=2, tm_yday=255, tm_isdst=0)
+**Date**: No date available
 
-- LangChain and assistant-ui have collaborated to integrate LangGraph agents, allowing for the development of stateful conversational AI agents in React applications.
-- assistant-ui is a React-based chat interface designed for AI-driven conversations, offering features such as Streaming LLM Results, Rich Content Display, Generative UI, Human-in-the-Loop with Approval UI, and Multimodal interactions.
-- The combination of LangGraph and assistant-ui enables developers to create interactive AI assistants with features like streaming, generative UI, and approval UI, enhancing communication between users and AI agents.
+- OpenRecovery is transforming addiction recovery through an AI-powered assistant that offers personalized 24/7 support via text and voice, bridging the gap between inpatient care and self-help programs.
+- OpenRecovery built a multi-agent system using LangGraph, enabling tailored prompts for different stages of recovery, efficient context switching, and scalability for expansion.
+- OpenRecovery incorporates human-in-the-loop features in their app to enhance trust and accuracy, allowing users to edit AI-generated content and provide feedback, while utilizing LangSmith for collaborative prompt engineering and continuous improvement processes.
 
-[Read more](https://blog.langchain.dev/assistant-ui/)
+[Read more](https://blog.langchain.dev/customers-openrecovery/)

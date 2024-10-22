@@ -71,6 +71,3 @@ def test_format_summary_file_output():
         file_contents = f.read()
 
     assert file_contents == formatted_output
-
-    # Clean up: remove the created file
-    # os.remove(output_path)

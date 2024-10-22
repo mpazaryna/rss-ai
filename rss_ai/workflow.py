@@ -45,9 +45,32 @@ def process_feeds(feed_file: str, output_dir: str, days: int = 1):
 
     # Process each article
     for article in articles:
-        process_article(article, output_dir)  # Call the new helper function
+        process_article_if_not_exists(
+            article, output_dir
+        )  # Call the new helper function
 
     logger.info("Finished processing feeds")
+
+
+def process_article_if_not_exists(article: Dict, output_dir: str):
+    """
+    Check if the article summary file already exists. If not, process the article.
+
+    Args:
+        article (Dict): The article data.
+        output_dir (str): Path to the directory where formatted summaries will be saved.
+    """
+    # Generate the filename using the generate_cache_filename function
+    filename = generate_cache_filename(article["link"]) + ".md"
+    file_path = os.path.join(output_dir, filename)
+
+    # Check if the file already exists
+    if os.path.exists(file_path):
+        logger.info(f"File already exists, skipping: {file_path}")
+    else:
+        process_article(
+            article, output_dir
+        )  # Call the original process_article function
 
 
 def process_article(article: Dict, output_dir: str):
@@ -63,12 +86,9 @@ def process_article(article: Dict, output_dir: str):
         article_data = {
             "title": article.get("title", "No title available"),
             "source": article.get("feed_name", "Unknown source"),
-            "date": article.get("published_parsed", "No date available"),
+            "date": article.get("published_parse", "No date available"),
             "url": article.get("link", "#"),
         }
-
-        # For this example, we'll use the article's summary as our "AI-generated" summary
-        # summary = article.get("summary", "No summary available")
 
         # Scrape the full content of the article
         try:

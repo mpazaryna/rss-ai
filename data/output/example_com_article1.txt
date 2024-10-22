@@ -1,3 +1,3 @@
-- OpenAI has developed a new series of reasoning models that can solve harder problems in science, coding, and math by spending more time thinking before responding.
-- The reasoning model in the o1 series performs well on challenging benchmark tasks in various fields, surpassing previous models and even some human performance levels.
-- OpenAI has also enhanced safety measures and collaboration efforts to ensure the responsible development and deployment of these advanced AI models.
+- OpenAI has developed a new series of AI reasoning models that can solve hard problems in science, coding, and math by spending more time thinking before responding.
+- These models have been trained to excel in physics, chemistry, biology, math, and coding, outperforming existing models in challenging tasks.
+- OpenAI has introduced a new series called OpenAI o1, which includes safety measures, enhanced reasoning capabilities, and models designed for complex problem-solving in various fields such as healthcare, physics, and software development.
