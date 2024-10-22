@@ -21,12 +21,7 @@ logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 # Path to the test feeds file
-TEST_FEEDS_PATH = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), "..", "data", "test_feeds.yaml")
-)
-
-# Add this line for debugging
-logger.info(f"TEST_FEEDS_PATH: {TEST_FEEDS_PATH}")
+TEST_FEEDS_PATH = "/Users/mpaz/workspace/rss-ai/data/test_feeds.yaml"  # Updated path
 
 
 # Tests for load_feeds function
